@@ -46,3 +46,9 @@ def post_comment(article_id: int, content: str):
         return None
     return response.json()
 
+
+# Helper functions
+def is_already_commented(article):
+    """Check if article is already commented by myself"""
+    return any(comment['is_mine'] and not comment['is_hidden']
+        for comment in article['comments'])

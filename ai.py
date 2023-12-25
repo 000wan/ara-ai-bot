@@ -27,18 +27,21 @@ def generate_comment(article) -> str:
 
     return model.generate_content(prompt, generation_config=parameters).text
 
+import ara
 def write_comment(article) -> bool:
     if article is None:
-        print('[ERROR] Article not found.')
+        print('[ERROR] Article not found.\n')
         return False
-
-    import ara
+    
     id = article['id']
+    if ara.is_already_commented(article):
+        print(f'* Already commented on article {id}.\n')
+        return False
     print(f'* Commenting on article {id}...')
 
     comment = generate_comment(article)
     res = ara.post_comment(id, comment)
     if res:
-        print(f'- Successfully commented: {comment}\n')
+        print(f'- Successfully commented on {id}: {comment}\n')
         return True
     else: return False

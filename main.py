@@ -3,7 +3,7 @@ if __name__ == "__main__":
     import ara
     import ai
 
-    article_id = 5552
+    article_id = 6762
 
     success_count = 0
     fail_count = 0
@@ -16,7 +16,6 @@ if __name__ == "__main__":
         try:
             article_id = article['side_articles']['after']['id']
         except:
-            article_id = None
             break
 
-    print(f'Terminated with {success_count} success(es) and {fail_count} failure(s).')
+    print(f'Terminated with {success_count} success(es) and {fail_count} failure(s), out of {success_count + fail_count} total.')
