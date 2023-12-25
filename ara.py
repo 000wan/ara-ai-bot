@@ -18,13 +18,14 @@ header = {
 cookie = { "sessionid": api_session }
 
 
-def get_article(article_id: int):
+def get_article(article_id: int, from_view: str = ""):
     """Get article by id"""
-    response = requests.get(f'{base_URL}/api/articles/{article_id}', headers=header, cookies=cookie)
+    query = f'?from_view={from_view}' if from_view else ''
+    response = requests.get(f'{base_URL}/api/articles/{article_id}/{query}', headers=header, cookies=cookie)
     
     try: response.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        print(f'[ERROR] GET: {e}')
+        print(f'[ERROR] GET: {e}\n')
         return None
     return response.json()
 
@@ -41,7 +42,7 @@ def post_comment(article_id: int, content: str):
     
     try: response.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        print(f'[ERROR] POST: {e}')
+        print(f'[ERROR] POST: {e}\n')
         return None
     return response.json()
 
