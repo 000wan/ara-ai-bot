@@ -20,7 +20,7 @@ def generate_comment(article) -> str:
     prompt = f'''{instruction}
 
     {content}
-    - 나의 댓글: '''
+    - [나의 댓글]: '''
 
     # print(prompt)
     
@@ -71,13 +71,11 @@ def write_comment(article) -> bool:
         return False
     print(f'* Commenting on article {id}...')
 
-    try:
-        comment = generate_comment(article)
-        res = ara.post_comment(id, comment)
-    except Exception as e:
-        print(f'[ERROR] AI: {e}\n')
+    comment = generate_comment(article)
+    if comment is None:
         return False
     
+    res = ara.post_comment(id, comment)    
     if res:
         print(f'- Successfully commented on {id}: {comment}\n')
         return True

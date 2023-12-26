@@ -62,7 +62,7 @@ def format_article(article) -> str:
     제목: {title}
     작성자: {article['created_by']['profile']['nickname']}
 
-    본문: {content}
+    본문: "{content}"
 
     댓글 {article['comment_count']}개:\n'''
     res += comments
@@ -74,7 +74,7 @@ def format_comments(comments, prefix: str) -> str:
     comments = filter(lambda comment: not comment['is_hidden'], comments)
     res = ""
     for comment in comments:
-        res += f'{prefix} {comment["created_by"]["profile"]["nickname"]}: {comment["content"]}\n'
+        res += f'{prefix} [{comment["created_by"]["profile"]["nickname"]}]: {comment["content"]}\n'
         if "comments" in comment.keys():
             res += format_comments(comment["comments"], "  " + prefix)
     return res
