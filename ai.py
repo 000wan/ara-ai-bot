@@ -12,9 +12,10 @@ from PIL import Image
 import requests
 from io import BytesIO
 
+with open('prompt.txt', 'r') as f:
+    instruction = f.read()
+
 def generate_comment(article) -> str:
-    instruction = "다음 게시물에 적절한 댓글을 작성하세요. 당신은 KAIST 교내 커뮤니티 Ara의 사용자입니다. 인터넷 예절을 지키되 자연스러운 댓글을 작성하세요. 닉네임을 제외하고 오직 댓글 내용만을 작성하세요."
-    
     content = ara.format_article(article)
     prompt = f'''{instruction}
 
