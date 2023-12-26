@@ -49,8 +49,10 @@ def post_comment(article_id: int, content: str):
 # Formatting functions
 def format_article(article) -> str:
     """Format article to string"""
+    import html2text
 
     title = article['title']
+    content = html2text.html2text(article['content'])
     if article['parent_topic']:
         title = f'[{article["parent_topic"]["ko_name"]}] {title}'
     comments = format_comments(article['comments'], "    -")
@@ -60,7 +62,7 @@ def format_article(article) -> str:
     제목: {title}
     작성자: {article['created_by']['profile']['nickname']}
 
-    본문: {article['content']}
+    본문: {content}
 
     댓글 {article['comment_count']}개:\n'''
     res += comments

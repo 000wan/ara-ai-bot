@@ -21,8 +21,7 @@ def generate_comment(article) -> str:
     {content}
     - 나의 댓글: '''
 
-    print(prompt)
-
+    # print(prompt)
     
     # Use Gemini Pro Vision if there are attachments
     attachments = list(filter(lambda attachment: attachment['mimetype'].startswith('image'), article['attachments']))
@@ -55,7 +54,7 @@ def generate_comment(article) -> str:
     try:
         return response.text
     except Exception as e:
-        print(f'[ERROR] AI: {e}')
+        print(f'[ERROR] AI: {e}\n')
         print(response.prompt_feedback)
         return None
 
@@ -67,12 +66,17 @@ def write_comment(article) -> bool:
     
     id = int(article['id'])
     if ara.is_already_commented(article):
-        print(f'* Already commented on article {id}.\n')
+        print(f'* Already commented on article {id}.')
         return False
     print(f'* Commenting on article {id}...')
 
-    comment = generate_comment(article)
-    res = ara.post_comment(id, comment)
+    try:
+        comment = generate_comment(article)
+        res = ara.post_comment(id, comment)
+    except Exception as e:
+        print(f'[ERROR] AI: {e}\n')
+        return False
+    
     if res:
         print(f'- Successfully commented on {id}: {comment}\n')
         return True
