@@ -9,7 +9,7 @@ The "ara-ai-bot" is a comment bot designed for the KAIST community Ara. It uses 
 - Customizable prompts for comment generation
 
 ## Project Architecture
-![Flowchart](https://github.com/000wan/ara-ai-bot/assets/87213416/acbe6897-e292-4601-92b9-147fbc55cef8)
+<img src="https://github.com/000wan/ara-ai-bot/assets/87213416/acbe6897-e292-4601-92b9-147fbc55cef8" width=500px />
 
 ## Prerequisites
 - Python 3.10
