@@ -1,7 +1,6 @@
 # main.py
 import threading
 import time
-import atexit
 
 success_count = 0
 fail_count = 0
@@ -30,9 +29,21 @@ if __name__ == "__main__":
     \n''')
 
     import ara
+    import sys
+    import atexit
     atexit.register(exit_handler)
 
-    article_id = 7212
+    try:
+        article_id = int(sys.argv[1])
+    except IndexError:
+        print('Usage: python main.py <article_id>')
+        print('[ERROR] Too few arguments.')
+        exit(1)
+    except ValueError:
+        print('Usage: python main.py <article_id>')
+        print('[ERROR] article_id must be an integer.')
+        exit(1)
+
     is_waiting = False
 
     threads = []
@@ -51,7 +62,9 @@ if __name__ == "__main__":
             article_id = int(article['side_articles']['after']['id'])
         else:
             if not is_waiting:
+                time.sleep(1)
                 print(f'* Waiting for a new article...')
+                print('  To exit, press Ctrl+C.\n')
                 is_waiting = True
             time.sleep(10)
     
